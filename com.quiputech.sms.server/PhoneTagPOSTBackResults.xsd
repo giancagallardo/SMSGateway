@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="media">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="result"/>
+        <xs:element type="xs:string" name="transcription"/>
+        <xs:element type="xs:string" name="filename"/>
+        <xs:element name="length">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:short">
+                <xs:attribute type="xs:string" name="type"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="duration">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:short">
+                <xs:attribute type="xs:string" name="type"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="content-type"/>
+        <xs:element type="xs:string" name="api-info"/>
+        <xs:element type="xs:string" name="pull-url"/>
+        <xs:element type="xs:string" name="result-url"/>
+        <xs:element name="created-at">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:dateTime">
+                <xs:attribute type="xs:string" name="type"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:int" name="external-id"/>
+        <xs:element type="xs:string" name="receiver-id"/>
+        <xs:element type="xs:string" name="receiver-name"/>
+        <xs:element type="xs:string" name="sender-id"/>
+        <xs:element type="xs:string" name="sender-name"/>
+        <xs:element type="xs:string" name="response-url"/>
+        <xs:element type="xs:string" name="external-data"/>
+        <xs:element type="xs:string" name="id"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

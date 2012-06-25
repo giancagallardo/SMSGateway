@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="RESPONSE">
+
+    <xs:complexType>
+    	<xs:sequence>
+    		<xs:element name="status" type="xs:string"></xs:element>
+    		<xs:element name="credits" type="xs:double"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    </xs:element>
+</xs:schema>

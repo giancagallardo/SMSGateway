@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="RESPONSE">
+	    <xs:complexType>
+	    	<xs:sequence>
+	    		<xs:element name="status" type="xs:string"></xs:element>
+	    		<xs:element name="credits" type="xs:double"></xs:element>
+	    	</xs:sequence>
+	    </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SMS">
+	    <xs:complexType>
+	    	<xs:sequence>
+	    		<xs:element name="authentification" type="authentificationType" maxOccurs="1" minOccurs="1"></xs:element>
+	    		<xs:element name="message" type="messageType" maxOccurs="1" minOccurs="1"></xs:element>
+	    		<xs:element name="recipients" type="recipientsType" maxOccurs="1" minOccurs="1"></xs:element>
+	    	</xs:sequence>
+	    </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="recipientsType">
+    	<xs:sequence>
+    		<xs:element name="gsm" type="gsmType" maxOccurs="unbounded" minOccurs="1"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="messageType">
+    	<xs:sequence>
+    		<xs:element name="sender" type="xs:string"></xs:element>
+    		<xs:element name="text" type="xs:string"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="authentificationType">
+    	<xs:sequence>
+    		<xs:element name="username" type="xs:string"></xs:element>
+    		<xs:element name="password" type="xs:string"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="gsmType">
+    	<xs:simpleContent>
+    		<xs:extension base="xs:int">
+    			<xs:attribute name="messageId" type="xs:string"></xs:attribute>
+    		</xs:extension>
+    	</xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

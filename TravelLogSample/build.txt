@@ -1,0 +1,33 @@
+REQUIREMENTS:
+
+To use the TravelLog application you will need the following:
+1) JDK 1.5
+2) Tomcat 6.x
+3) Maven 2.x
+
+
+BUILDING:
+
+Before building the application you will need to configure the application to
+use your AWS account.  In the "src" directory there is a file,
+AwsCredentials.properties, that has two values you'll need to set:
+    accessKey=
+    secretKey=
+
+Once you've saved the AwsCredentials.properties file you can continue the build
+process using Maven.  To do so, use the following command from the root
+directory of the project:
+    mvn package
+
+This will build a file the war file, "TravelLog-1.0.0.war" in the "target"
+directory.  Once you've built the war, deploy it to your Tomcat server.
+
+
+RUNNING:
+
+When you first access the TravelLog application, it will run the "bootstrap"
+mode which will allow you to do the initial setup of the application.
+This process will prompt you for administrator credentials, the basic journal
+information, etc.  Once completed you will be redirected to the main journal
+page.  At this point you can log in and begin updating the journal with
+entries and photos.

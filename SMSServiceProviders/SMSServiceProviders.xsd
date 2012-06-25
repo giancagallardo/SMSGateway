@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://services.sms.quiputech.com/providers">
+
+    
+    <xsd:complexType name="Sms">
+    	<xsd:sequence>
+            <xsd:element name="uuid" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+            <xsd:element name="origin" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
+    		<xsd:element name="destination" type="xsd:int" maxOccurs="1" minOccurs="1"></xsd:element>
+    		<xsd:element name="message" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Authorization">
+    	<xsd:sequence>
+    		<xsd:element name="token" type="xsd:string" maxOccurs="1" minOccurs="1">
+    		</xsd:element>
+    		<xsd:element name="clientId" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Customer">
+    	<xsd:sequence>
+    		<xsd:element name="customerId" type="xsd:string"></xsd:element>
+    		<xsd:element name="fullName" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SmsStatus">
+    	<xsd:sequence>
+    		<xsd:element name="uuid" type="xsd:string"></xsd:element>
+    		<xsd:element name="status">
+    			<xsd:simpleType>
+    				<xsd:restriction base="xsd:string">
+    					<xsd:enumeration value="SENT_OK"></xsd:enumeration>
+    					<xsd:enumeration value="DELIVERED"></xsd:enumeration>
+    					<xsd:enumeration value="ERROR"></xsd:enumeration>
+    				</xsd:restriction>
+    			</xsd:simpleType>
+    		</xsd:element>
+    		<xsd:element name="data" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

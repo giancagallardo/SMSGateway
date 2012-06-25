@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://quiputech.com/smsgateway" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://quiputech.com/smsgateway">
+
+
+    <complexType name="smsType">
+    	<sequence>
+    		<element name="sender" type="string" maxOccurs="1" minOccurs="1"></element>
+    		<element name="gsm" type="string" maxOccurs="1" minOccurs="1"></element>
+    		<element name="message" type="string" maxOccurs="1" minOccurs="1"></element>
+    		<element name="status" maxOccurs="1" minOccurs="1">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="enqueued"></enumeration>
+    					<enumeration value="failed"></enumeration>
+    					<enumeration value="sent"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    	<attribute name="uuid" type="string"></attribute>
+    </complexType>
+
+    <complexType name="customerType">
+    	<sequence>
+    		<element name="token" type="string"></element>
+    	</sequence>
+    	<attribute name="customerId" type="string"></attribute>
+    </complexType>
+
+    <element name="sms" type="tns:smsType"></element>
+</schema>

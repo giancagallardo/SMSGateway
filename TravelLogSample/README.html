@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Travel Log - Sample Java Web Application</title>
+</head>
+
+<body>
+<h1>Travel Log - Sample Java Web Application</h1>
+<p>Travel Log is a code sample that demonstrates how to use Amazon Web  Services in a Java Web application. It uses Amazon S3 to store trip  photos and a Java Persistence API to store journal entries and photo metadata in Amazon SimpleDB.</p>
+<h2>Prerequisites</h2>
+<p>Before you can use the Travel Log, you will need the following:</p>
+<ul>
+  <li>Requires JDK 1.5 or later</li>
+  <li>Requires <a href="http://tomcat.apache.org/index.html">Tomcat 6</a> or later</li>
+  <li>Requires <a href="http://maven.apache.org/">Maven 2</a> or later</li>
+  <li>You must be signed up for the following services:
+      <ul>
+         <li><a href="http://aws.amazon.com/s3">Amazon S3</a></li>
+         <li><a href="http://aws.amazon.com/simpledb">Amazon SimpleDB</a></li>
+         <li><a href="http://aws.amazon.com/sns">Amazon Simple Notification Service</a></li>
+      </ul>
+  </li>
+</ul>
+<h2>Running the Sample</h2>
+<h3>Configuring the Source</h3>
+<p>After you've downloaded the source and before you compile the application, update the AwsCredentials.properties file to include the access and secret key information you received earlier when you signed up for your AWS account. </p>
+<p>Your version of the AwsCredentials.properties file should look like this: </p>
+<pre># You must configure the accessKey, secretKey
+# running the Travel Log application
+accessKey=<strong></strong>
+secretKey=<strong></strong></pre>
+<p>When you are finished editing the file, save it.  You should now be ready to build the Web archive (WAR) file and try out  the Travel Log application in your browser. </p>
+<h3>Building the Source</h3>
+<p>With the application source code downloaded, you use <a href="http://maven.apache.org/download.html">Apache Maven</a> to build the code. Open a terminal, use cd to enter the directory, and then type: </p>
+<pre>$ mvn compile war:war  </pre>
+<p>The build process downloads all the dependencies  that the application uses, compiles all the code, and builds the WAR  file. The WAR file, called TravelLog-1.0.0.war, resides in the target directory of the project. </p>
+<p>One dependency that Maven automatically downloads is the SimpleJPA library, which is listed in the pom.xml file. Because Maven handles the dependency for you, you don't have to download the library yourself. </p>
+<p>When the build is complete, you will see a message like this: </p>
+<pre>
+[INFO] Building war: /home/user1/Projects/travellog/target/TravelLog-1.0.0.war
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 15 seconds
+[INFO] Finished at: Sat Nov 20 18:57:15 CST 2010
+[INFO] Final Memory: 19M/118M
+[INFO] ------------------------------------------------------------------------
+</pre>
+<p>Deploy this WAR file to the Tomcat server by copying the file to the webapps folder in Tomcat's home, like this: </p>
+<pre>$ cp TravelLog-1.0.0.war ${TOMCAT_HOME}/webapps  </pre>
+<p>If you already have Tomcat started when you copy  the WAR file, Tomcat picks up the change automatically and deploys the  WAR file. If you see the WAR file unpacked in the webapps folder (it will be in the TravelLog-1.0.0 folder), Tomcat has found the WAR and deployed it. You can be certain that the WAR has started successfully be viewing the localhost.log file in your Tomcat's log folder. The log file will contain an entry that looks like this if the Web application has been deployed correctly: </p>
+<pre>
+INFO: Set web app root system property: 'webapp.root' = [/home/ngood/local/tomcat/webapps/TravelLog-1.0.0/]
+Nov 18, 2010 8:06:41 PM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+</pre>
+<h3>Viewing the Application in Action</h3>
+<p>Open the Travel Log  application by going to the Tomcat URL of the Web application. Because  port 8080 is the default port for Tomcat, on your machine that URL is  probably http://localhost:8080/TravelLog-1.0.0/. The server name may differ if you've deployed the application to a different server. </p>
+<p>If  for some reason the server URL does not work but you know that Tomcat  is running, check the logs again to make sure nothing is wrong with the  configuration. If you've specified incorrect keys for the access keys  or if the bucket name is formatted incorrectly, the application will  fail to start, and you should see the error message in the logs. </p>
+<p>When you run the application for the first time,  it prompts you to set up a user name and password. These are stored in  the database, so when you start the application the next time, you  won't have to register as a new user.</p>
+</body>
+</html>
