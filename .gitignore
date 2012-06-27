@@ -4,3 +4,7 @@
 *.jar
 *.war
 *.ear
+
+SMSGateway/build/classes/com/quiputech/sms/gateway/util/GatewayHelper.class
+
+SMSTesting/bin/com/quiputech/sms/testing/ProvidersTesting.class
