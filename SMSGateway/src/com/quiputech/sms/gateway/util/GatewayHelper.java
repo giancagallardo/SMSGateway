@@ -1,13 +1,18 @@
 package com.quiputech.sms.gateway.util;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
+import org.jboss.logging.Logger;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
@@ -20,11 +25,28 @@ import com.quiputech.sms.messages.StatusInfoType;
 public class GatewayHelper {
 
 	private static final String ACKNOWLEDGED = "ACK";
-	private static final String QUEUE_URL = "https://queue.amazonaws.com/382063515626/post-sms-queue";
+	//private static final String DEFAULT_QUEUE_URL = "https://queue.amazonaws.com/382063515626/post-sms-queue";
+	private static final String DEFAULT_QUEUE_URL = "https://queue.amazonaws.com/382063515626/desa-post-sms-queue";
+	private static Logger log = Logger.getLogger(GatewayHelper.class);
+	private static Properties props = new Properties();
 	
 	static {
-		System.setProperty("aws.accessKeyId", "AKIAJUNR2HH5SXZ6NONA");
-		System.setProperty("aws.secretKey", "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");
+		if(System.getProperty("aws.accessKeyId") == null)
+			System.setProperty("aws.accessKeyId", "AKIAJUNR2HH5SXZ6NONA");
+		if(System.getProperty("aws.secretKey") == null)
+			System.setProperty("aws.secretKey", "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");
+		// pressumed to be deployed in JBoss
+		String baseDir = System.getProperty("jboss.home.dir");
+		if(baseDir == null)
+			baseDir = System.getProperty("user.dir");
+		try {
+			File propsFile = new File(baseDir + "/standalone/configuration/gateway.properties");
+			log.info("Looking for SMSGateway props in: " + propsFile.getPath());
+			if(propsFile.exists())
+				props.load(new FileInputStream(propsFile));
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
 	}
 	
 	public static String enqueuePost(String token, int customerId, String origin, String destination, String message) throws JAXBException {
@@ -87,7 +109,8 @@ public class GatewayHelper {
 
 		AmazonSQS sqs = new AmazonSQSClient();
 		SendMessageRequest smr = new SendMessageRequest();
-		smr.setQueueUrl(QUEUE_URL);
+		String queue = props.getProperty("post-sms-queue", DEFAULT_QUEUE_URL);
+		smr.setQueueUrl(queue);
 		smr.setMessageBody(request.toString());
 		sqs.sendMessage(smr);
 		
