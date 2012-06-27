@@ -23,17 +23,20 @@ public class EMSServiceProvider {
 	
 	private static final String DEFAULT_USER = "miguel";
 	private static final String DEFAULT_PASS = "demo1234";
-	private static final String DEFAULT_SEND_ENDPOINT = "http://182.72.103.86/websmpp/websms";
-	private static final String DEFAULT_STATUS_ENDPOINT = "http://182.72.103.86/websmpp/websmsstatus";
+	
+	//private static final String DEFAULT_SEND_ENDPOINT = "http://182.72.103.86/websmpp/websms";
+	private static final String DEFAULT_SEND_ENDPOINT = "http://desa2.quiputech.com:8080/EMSDummy/websms";
+
+	//private static final String DEFAULT_STATUS_ENDPOINT = "http://182.72.103.86/websmpp/websmsstatus";
+	private static final String DEFAULT_STATUS_ENDPOINT = "http://desa2.quiputech.com:8080/EMSDummy/websmsstatus";
 	
 	static {
-		
+		// pressumed to be deployed in JBoss
 		String baseDir = System.getProperty("jboss.home.dir");
 		if(baseDir == null)
 			baseDir = System.getProperty("user.dir");
-		
 		try {
-			File propsFile = new File(baseDir + "/ems.properties");
+			File propsFile = new File(baseDir + "/standalone/configuration/ems.properties");
 			log.info("Looking for EMS props in: " + propsFile.getPath());
 			if(propsFile.exists())
 				props.load(new FileInputStream(propsFile));
@@ -70,7 +73,6 @@ public class EMSServiceProvider {
 		HttpGet get = new HttpGet(uri);
 		log.info(uri);
 
-		
 		HttpClient client = new DefaultHttpClient();
 		HttpResponse response = client.execute(get);
 		
