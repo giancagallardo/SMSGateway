@@ -3,7 +3,6 @@
 	<name>SMSGateway</name>
 	<comment></comment>
 	<projects>
-		<project>SMSLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

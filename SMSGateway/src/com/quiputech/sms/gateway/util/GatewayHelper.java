@@ -25,7 +25,6 @@ import com.quiputech.sms.messages.StatusInfoType;
 public class GatewayHelper {
 
 	private static final String ACKNOWLEDGED = "ACK";
-	//private static final String DEFAULT_QUEUE_URL = "https://queue.amazonaws.com/382063515626/post-sms-queue";
 	private static final String DEFAULT_QUEUE_URL = "https://queue.amazonaws.com/382063515626/desa-post-sms-queue";
 	private static Logger log = Logger.getLogger(GatewayHelper.class);
 	private static Properties props = new Properties();
@@ -49,7 +48,7 @@ public class GatewayHelper {
 		}
 	}
 	
-	public static String enqueuePost(String token, int customerId, String origin, String destination, String message) throws JAXBException {
+	public static String enqueuePost(String token, int customerId, String sender, String destination, String message) throws JAXBException {
 
 		// build post
 		PostSmsRequestType smsrequest = new PostSmsRequestType();
@@ -60,7 +59,7 @@ public class GatewayHelper {
 		smsrequest.setAuthorization(auth);
 		// sms
 		SmsType sms = new SmsType();
-		sms.setOrigin(origin);
+		sms.setOrigin(sender);
 		sms.setDestination(destination);
 		sms.setMessage(message);
 		smsrequest.setSms(sms);		

@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.logging.Logger;
 
-import com.quiputech.sms.gateway.util.GatewayHelper;
+import com.quiputech.sms.gateway.util.GatewayService;
+import com.quiputech.sms.xml.PostSmsRequestType;
+
 
 /**
  * Servlet implementation class PostSms
@@ -21,6 +23,7 @@ import com.quiputech.sms.gateway.util.GatewayHelper;
 public class PostSmsServlet extends HttpServlet {
 	
 	private static Logger log = Logger.getLogger(PostSmsServlet.class);
+	private static final String ERROR_RESPONSE = "<error><code>-1</code><message>Something happened. Please try again later.</message></error>";
 	
 	private static final long serialVersionUID = 1L;
        
@@ -35,25 +38,27 @@ public class PostSmsServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// read params
-		String token = request.getParameter("token");
-		int customerId = Integer.parseInt(request.getParameter("customer"));
-		String origin = request.getParameter("origin");
-		String destination = request.getParameter("destination");
-		String message = request.getParameter("message");
-
-		// enqueue
-		log.info("Incoming GET request: " +  request.getQueryString()); 
+		// log incoming
 		PrintWriter out = response.getWriter();
+		log.info("Incoming GET request: " +  request.getQueryString()); 
 		try {
-			String rsp = GatewayHelper.enqueuePost(token, customerId, origin, destination, message);
+			// read params
+			String token = request.getParameter("token");
+			int customerId = Integer.parseInt(request.getParameter("customerId"));
+			String sender = request.getParameter("sender");
+			String destination = request.getParameter("destination");
+			String message = request.getParameter("message");
+
+			// create instance
+			PostSmsRequestType postSmsRequest = GatewayService.buildPostSmsRequest(token, customerId, sender, destination, message);
+			// enqueueRequest
+			String responseXml = GatewayService.enqueuePostSmsRequest(postSmsRequest, request.getRemoteAddr(), request.getRemoteHost());
 			response.setContentType("application/xml");
-			out.print(rsp);
-			log.info(rsp);
+			out.print(responseXml);
+			log.info(responseXml);
 		} catch(Exception e) {
 			log.error(e.getLocalizedMessage(), e);
-			out.print("<error><code>-1</code><message>Something happened. Please try again later.</message></error>");
+			out.print(ERROR_RESPONSE);
 		}
 	}
 
@@ -66,13 +71,16 @@ public class PostSmsServlet extends HttpServlet {
 		log.info("Incoming POST request"); 
 		PrintWriter out = response.getWriter();
 		try {
-			String rsp = GatewayHelper.enqueuePost(request.getInputStream());
+			// unmarshall
+			PostSmsRequestType postSmsRequest = GatewayService.buildPostSmsRequest(request.getInputStream());
+			// enqueueRequest
+			String responseXml = GatewayService.enqueuePostSmsRequest(postSmsRequest, request.getRemoteAddr(), request.getRemoteHost());
 			response.setContentType("application/xml");
-			out.print(rsp);
-			log.info(rsp);
+			out.print(responseXml);
+			log.info(responseXml);
 		} catch(Exception e) {
 			log.error(e.getLocalizedMessage(), e);
-			out.print("<error><code>-1</code><message>Something happened. Please try again later.</message></error>");
+			out.print(ERROR_RESPONSE);
 		}
 	}
 
