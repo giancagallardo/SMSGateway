@@ -53,7 +53,7 @@ public class EMSServiceProvider {
 
 		String user = props.getProperty("ems.user", DEFAULT_USER);
 		String pass = props.getProperty("ems.pass", DEFAULT_PASS);
-		String endpoint = props.getProperty("ems.endpoint", DEFAULT_SEND_ENDPOINT);
+		String endpoint = props.getProperty("ems.send.endpoint", DEFAULT_SEND_ENDPOINT);
 		
 		String uri = String.format("%s?user=%s&pass=%s&sid=%s&mno=%s&text=%s&type=1&esm=0&dcs=0", endpoint, user, pass, sender, destination, URLEncoder.encode(message, "UTF-8"));
 		HttpGet get = new HttpGet(uri);
@@ -68,7 +68,7 @@ public class EMSServiceProvider {
 	}
 	
 	public String checkStatus(String responseId) throws ClientProtocolException, IOException {
-		String endpoint = props.getProperty("ems.endpoint", DEFAULT_STATUS_ENDPOINT);
+		String endpoint = props.getProperty("ems.status.endpoint", DEFAULT_STATUS_ENDPOINT);
 		String uri = String.format("%s?respid=%s", endpoint, responseId);
 		HttpGet get = new HttpGet(uri);
 		log.info(uri);
