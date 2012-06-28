@@ -22,7 +22,7 @@
 
 	<xs:complexType name="smsType">
 		<xs:sequence>
-			<xs:element name="origin" type="xs:string" maxOccurs="1"
+			<xs:element name="sender" type="xs:string" maxOccurs="1"
 				minOccurs="1">
 			</xs:element>
 			<xs:element name="destination" type="xs:string" maxOccurs="1"
